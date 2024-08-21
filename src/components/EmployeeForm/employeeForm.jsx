@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import "../EmployeeForm/employeeForm.css"
+import { Button } from '../Button/button';
 
 
 function EmployeeForm ({ onSave }) {
@@ -18,7 +20,12 @@ function EmployeeForm ({ onSave }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className='formContainer'>
+      <div className='formHeader'>
+      <h3>Create Employee</h3>
+      <Button text="Current Employees" link="/employee-list"/>
+      </div>
+    <form className='employeeForm' onSubmit={handleSubmit}>
       <label htmlFor="first-name">First Name</label>
       <input type="text" id="first-name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
 
@@ -31,15 +38,16 @@ function EmployeeForm ({ onSave }) {
       <label htmlFor="start-date">Start Date</label>
       <input type="date" id="start-date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
 
+      <label htmlFor="street">Street</label>
+      <input id="street" type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
+      
       <fieldset className="address">
-        <legend>Address</legend>
-
-        <label htmlFor="street">Street</label>
-        <input id="street" type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
-
+        <legend>More info</legend>
+        <div className='fieldsetContainer'>
         <label htmlFor="city">City</label>
         <input id="city" type="text" value={city} onChange={(e) => setCity(e.target.value)} />
-
+        </div>
+        <div className='fieldsetContainer'>
         <label htmlFor="state">State</label>
         <select id="state" value={state} onChange={(e) => setState(e.target.value)}>
           <option value="">Select a state</option>
@@ -47,9 +55,12 @@ function EmployeeForm ({ onSave }) {
           <option value="NY">New York</option>
           {/* Add more states as options */}
         </select>
-
+        </div>
+        <div className='fieldsetContainer'>
         <label htmlFor="zip-code">Zip Code</label>
         <input id="zip-code" type="number" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+        </div>
+
       </fieldset>
 
       <label htmlFor="department">Department</label>
@@ -61,8 +72,9 @@ function EmployeeForm ({ onSave }) {
         <option value="Legal">Legal</option>
       </select>
 
-      <button type="submit">Save</button>
+      <Button text="Save" link={false}/>
     </form>
+    </div>
   );
 };
 

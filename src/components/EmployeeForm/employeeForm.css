@@ -1,0 +1,55 @@
+.employeeForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+}
+
+.formContainer{
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 30px;
+}
+.employeeForm > *:not(label,legend){
+    margin: 10px 0;
+    padding: 10px;
+}
+
+label, legend {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+input,select{
+    border-radius: 5px;
+    background:gainsboro;
+    border: none;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-weight:500
+}
+
+
+.formHeader{
+    display: flex;
+    justify-content: space-between
+}
+
+fieldset {
+    display: flex;
+    padding: 20px 10px !important;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid gainsboro;
+}
+
+fieldset > *{
+    margin: 0 5px;
+}
+
+.fieldsetContainer > select,input {
+    padding: 10px;
+}
+
+.fieldsetContainer{
+    display: flex;
+    flex-direction: column;
+}
