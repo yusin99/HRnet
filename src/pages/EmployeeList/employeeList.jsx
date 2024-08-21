@@ -104,3 +104,10 @@ function EmployeeList() {
 }
 
 export default EmployeeList;
+
+// TODO: Recherche  + намаляне на страници
+// TODO: Redux au lieu de localStorage
+// TODO: Le tri au niveau du tableau (one parameter at time)
+// TODO: Tri + Search faire fonctionner 
+// TODO: Counter employees displayed (dynamic)
+// TODO: Modifier selector 10 25 50 100
