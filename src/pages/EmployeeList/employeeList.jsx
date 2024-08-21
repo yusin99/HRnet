@@ -1,71 +1,137 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '../../components/Header/header';
-import { Button } from './../../components/Button/button';
+import { Button } from '../../components/Button/button';
 import './employeeList.css';
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [employeesPerPage, setEmployeesPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOption, setSortOption] = useState({ key: '', direction: '' });
 
   useEffect(() => {
-    // Retrieve employee data from local storage when the component mounts
     const storedEmployees = JSON.parse(localStorage.getItem('employees')) || [];
     setEmployees(storedEmployees);
   }, []);
 
-  // Calculate the indices of the employees to display on the current page
-  const indexOfLastEmployee = currentPage * employeesPerPage;
-  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
-  const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // Handle change in employees per page
-  const handleEmployeesPerPageChange = (e) => {
-    setEmployeesPerPage(Number(e.target.value));
-    setCurrentPage(1); // Reset to first page when per page option changes
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value.toLowerCase());
+    setCurrentPage(1);
   };
 
-  // Calculate total pages
-  const totalPages = Math.ceil(employees.length / employeesPerPage);
+  const handleSort = (key) => {
+    let direction = 'asc';
+    if (sortOption.key === key && sortOption.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortOption({ key, direction });
+  };
+
+  const sortEmployees = (employees) => {
+    return [...employees].sort((a, b) => {
+      if (sortOption.direction === 'asc') {
+        return a[sortOption.key] > b[sortOption.key] ? 1 : -1;
+      } else {
+        return a[sortOption.key] < b[sortOption.key] ? 1 : -1;
+      }
+    });
+  };
+
+  const filteredEmployees = employees.filter((employee) =>
+    Object.values(employee).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery)
+    )
+  );
+
+  const sortedEmployees = sortOption.key ? sortEmployees(filteredEmployees) : filteredEmployees;
+
+  const indexOfLastEmployee = currentPage * employeesPerPage;
+  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
+  const currentEmployees = sortedEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleEmployeesPerPageChange = (e) => {
+    setEmployeesPerPage(Number(e.target.value));
+    setCurrentPage(1);
+  };
+
+  const totalPages = Math.ceil(sortedEmployees.length / employeesPerPage);
+
+  // Calculate dynamic values
+  const totalEmployees = filteredEmployees.length;
+  const startEmployee = indexOfFirstEmployee + 1;
+  const endEmployee = Math.min(indexOfLastEmployee, totalEmployees);
 
   return (
     <div id="employee-div" className="container">
       <Header />
       <div className='currentEmployeesContainer'>
-      <h2>Current Employees</h2>
-      <Button text="Back to Home" link="/" />
+        <h2>Current Employees</h2>
+        <Button text="Back to Home" link="/" />
       </div>
-      
+
       {employees.length > 0 ? (
         <>
-          <div className="pagination-controls">
-            <label htmlFor="employeesPerPage">Employees per page:</label>
-            <select
-              id="employeesPerPage"
-              value={employeesPerPage}
-              onChange={handleEmployeesPerPageChange}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-            </select>
+          <div className="search-and-filter">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+            <div className="pagination-controls">
+              <label htmlFor="employeesPerPage">Employees per page:</label>
+              <select
+                id="employeesPerPage"
+                value={employeesPerPage}
+                onChange={handleEmployeesPerPageChange}
+              >
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </div>
           </div>
+
+          {/* Dynamic Text Display */}
+          <div className="dynamic-text">
+            Showing {startEmployee} to {endEmployee} of {totalEmployees} employees
+          </div>
+
           <table id="employee-table" className="display">
             <thead>
               <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Date of Birth</th>
-                <th>Start Date</th>
-                <th>Street</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Zip Code</th>
-                <th>Department</th>
+                <th onClick={() => handleSort('firstName')}>
+                  First Name {sortOption.key === 'firstName' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => handleSort('lastName')}>
+                  Last Name {sortOption.key === 'lastName' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => handleSort('dateOfBirth')}>
+                  Date of Birth {sortOption.key === 'dateOfBirth' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => handleSort('startDate')}>
+                  Start Date {sortOption.key === 'startDate' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => handleSort('street')}>
+                  Street {sortOption.key === 'street' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => handleSort('city')}>
+                  City {sortOption.key === 'city' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => handleSort('state')}>
+                  State {sortOption.key === 'state' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => handleSort('zipCode')}>
+                  Zip Code {sortOption.key === 'zipCode' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                </th>
+                <th onClick={() => handleSort('department')}>
+                  Department {sortOption.key === 'department' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -84,6 +150,7 @@ function EmployeeList() {
               ))}
             </tbody>
           </table>
+
           <div className="pagination">
             {Array.from({ length: totalPages }, (_, i) => (
               <button
@@ -104,6 +171,8 @@ function EmployeeList() {
 }
 
 export default EmployeeList;
+
+
 
 // TODO: Recherche  + намаляне на страници
 // TODO: Redux au lieu de localStorage

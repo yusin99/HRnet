@@ -1,89 +1,94 @@
 #employee-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: left;
-  }
-  
-  #employee-table th, #employee-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  #employee-table th {
-    background-color: #f2f2f2;
-  }
-  
-  #employee-table tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .currentEmployeesContainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+  table-layout: fixed; /* Ensures equal width for all columns */
+}
 
+#employee-table th, #employee-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  height: 60px; /* Ensures equal height for all cells */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds ellipsis if text overflows */
+  white-space: nowrap; /* Prevents text from wrapping to a new line */
+}
 
-  /* Pagination Controls */
+#employee-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+#employee-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.currentEmployeesContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Pagination Controls */
 .pagination-controls {
-    margin: 20px 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  .pagination-controls label {
-    margin-right: 10px;
-  }
-  
-  .pagination-controls select {
-    padding: 5px;
-    font-size: 16px;
-  }
-  
-  /* Pagination Buttons */
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-  }
-  
-  .pagination button {
-    background-color: #1a1a1a;
-    color: white;
-    border: 1px solid #ddd;
-    padding: 10px 15px;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .pagination button.active {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .pagination button:hover {
-    background-color: #555;
-  }
-  
-  /* For responsiveness */
-  @media (max-width: 768px) {
-    .pagination-controls {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+}
+
+.pagination-controls label {
+  margin-right: 10px;
+}
+
+.pagination-controls select {
+  padding: 5px;
+  font-size: 16px;
+}
+
+/* Pagination Buttons */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination button {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination button.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.pagination button:hover {
+  background-color: #555;
+}
+
+/* For responsiveness */
+@media (max-width: 768px) {
+  .pagination-controls {
       flex-direction: column;
       align-items: flex-start;
-    }
-  
-    .pagination-controls select {
-      margin-top: 10px;
-    }
-  
-    .pagination {
-      flex-wrap: wrap;
-    }
-  
-    .pagination button {
-      margin-bottom: 10px;
-    }
   }
+
+  .pagination-controls select {
+      margin-top: 10px;
+  }
+
+  .pagination {
+      flex-wrap: wrap;
+  }
+
+  .pagination button {
+      margin-bottom: 10px;
+  }
+}

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import "../EmployeeForm/employeeForm.css";
 import { Button } from '../Button/button';
-import { Modal } from 'modal-customizer-react';
+import { Modal } from 'oc-custom-modal-react';
 
-function EmployeeForm({ onSave }) {
+export default function EmployeeForm({ onSave }) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -23,6 +23,22 @@ function EmployeeForm({ onSave }) {
       ...prevData,
       [id]: value,
     }));
+  };
+
+  const customModalStyles = {
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    padding: '20px',
+  };
+
+  const customTextStyles = {
+    color: '#333',
+    fontSize: '16px',
+    lineHeight: '1.5',
+  };
+
+  const customContentStyles = {
+    color: '#333',
+    textAlign: 'center',
   };
 
   const handleSubmit = (e) => {
@@ -113,9 +129,18 @@ function EmployeeForm({ onSave }) {
 
         <Button text="Save" />
       </form>
-      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} title="Employee created successfully" />}
+      {isModalOpen && 
+      <Modal
+          onClose={() => setIsModalOpen(false)}
+          title="Employee created successfully"
+          modalStyles={customModalStyles}
+          contentStyles={customContentStyles}
+          textStyles={customTextStyles}
+          isClosable={false}  // or false if you don't want the close button or outside click to work
+        >
+          <p>This is the custom content inside the modal.</p>
+          <button onClick={() => setIsModalOpen(false)} className='button'>Close Modal</button>
+        </Modal>}
     </div>
   );
 }
-
-export default EmployeeForm;
