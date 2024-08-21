@@ -3,18 +3,16 @@ import { Link } from 'react-router-dom';
 import { Header } from '../../components/Header/header';
 import { Button } from '../../components/Button/button';
 import './employeeList.css';
+import { useSelector } from 'react-redux';
 
 function EmployeeList() {
-  const [employees, setEmployees] = useState([]);
+  const employees = useSelector((state) => state.employees.employees);
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [employeesPerPage, setEmployeesPerPage] = useState(5);
+  const [employeesPerPage, setEmployeesPerPage] = useState(10);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState({ key: '', direction: '' });
 
-  useEffect(() => {
-    const storedEmployees = JSON.parse(localStorage.getItem('employees')) || [];
-    setEmployees(storedEmployees);
-  }, []);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
@@ -31,10 +29,13 @@ function EmployeeList() {
 
   const sortEmployees = (employees) => {
     return [...employees].sort((a, b) => {
+      const valueA = a[sortOption.key].toLowerCase();
+      const valueB = b[sortOption.key].toLowerCase();
+  
       if (sortOption.direction === 'asc') {
-        return a[sortOption.key] > b[sortOption.key] ? 1 : -1;
+        return valueA.localeCompare(valueB, undefined, { sensitivity: 'base' });
       } else {
-        return a[sortOption.key] < b[sortOption.key] ? 1 : -1;
+        return valueB.localeCompare(valueA, undefined, { sensitivity: 'base' });
       }
     });
   };
@@ -174,9 +175,9 @@ export default EmployeeList;
 
 
 
-// TODO: Recherche  + намаляне на страници
-// TODO: Redux au lieu de localStorage
-// TODO: Le tri au niveau du tableau (one parameter at time)
-// TODO: Tri + Search faire fonctionner 
-// TODO: Counter employees displayed (dynamic)
-// TODO: Modifier selector 10 25 50 100
+// TODO: Recherche  + намаляне на страници XXX
+// TODO: Redux au lieu de localStorage XXX
+// TODO: Le tri au niveau du tableau (one parameter at time) XXXX
+// TODO: Tri + Search faire fonctionner  XXX 
+// TODO: Counter employees displayed (dynamic) XXX
+// TODO: Modifier selector 10 25 50 100 XXX

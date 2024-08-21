@@ -1,29 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import "../EmployeeForm/employeeForm.css";
 import { Button } from '../Button/button';
 import { Modal } from 'oc-custom-modal-react';
+import { addEmployee } from '../../redux/slices/employeeSlice';
 
 export default function EmployeeForm({ onSave }) {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dateOfBirth: '',
-    startDate: '',
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    department: 'Sales',
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
-  };
+  const dispatch = useDispatch();
 
   const customModalStyles = {
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -41,17 +24,33 @@ export default function EmployeeForm({ onSave }) {
     textAlign: 'center',
   };
 
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    startDate: '',
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    department: 'Sales',
+  });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Retrieve existing employee data from local storage
-    const existingEmployees = JSON.parse(localStorage.getItem('employees')) || [];
-
-    // Add the new employee to the existing array
-    existingEmployees.push(formData);
-
-    // Save the updated array back to local storage
-    localStorage.setItem('employees', JSON.stringify(existingEmployees));
+    // Dispatch the addEmployee action to save the employee in the Redux store
+    dispatch(addEmployee(formData));
 
     // Trigger the success modal
     setIsModalOpen(true);

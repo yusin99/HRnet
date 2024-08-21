@@ -10,7 +10,7 @@
 #employee-table th, #employee-table td {
   padding: 12px 15px;
   border-bottom: 1px solid #ddd;
-  height: 60px; /* Ensures equal height for all cells */
+  height: 40px; /* Ensures equal height for all cells */
   overflow: hidden;
   text-overflow: ellipsis; /* Adds ellipsis if text overflows */
   white-space: nowrap; /* Prevents text from wrapping to a new line */
