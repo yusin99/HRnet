@@ -98,40 +98,35 @@ function EmployeeList() {
             </div>
           </div>
 
-          {/* Dynamic Text Display */}
-          <div className="dynamic-text">
-            Showing {startEmployee} to {endEmployee} of {totalEmployees} employees
-          </div>
-
           <table id="employee-table" className="display">
             <thead>
               <tr>
                 <th onClick={() => handleSort('firstName')}>
-                  First Name {sortOption.key === 'firstName' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                 {sortOption.key === 'firstName' && (sortOption.direction === 'asc' ? '↑' : '↓')} First Name 
                 </th>
                 <th onClick={() => handleSort('lastName')}>
-                  Last Name {sortOption.key === 'lastName' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                  {sortOption.key === 'lastName' && (sortOption.direction === 'asc' ? '↑' : '↓')} Last Name 
                 </th>
                 <th onClick={() => handleSort('dateOfBirth')}>
-                  Date of Birth {sortOption.key === 'dateOfBirth' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                 {sortOption.key === 'dateOfBirth' && (sortOption.direction === 'asc' ? '↑' : '↓')}  Date of Birth 
                 </th>
                 <th onClick={() => handleSort('startDate')}>
-                  Start Date {sortOption.key === 'startDate' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                  {sortOption.key === 'startDate' && (sortOption.direction === 'asc' ? '↑' : '↓')} Start Date 
                 </th>
                 <th onClick={() => handleSort('street')}>
-                  Street {sortOption.key === 'street' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                 {sortOption.key === 'street' && (sortOption.direction === 'asc' ? '↑' : '↓')}  Street 
                 </th>
                 <th onClick={() => handleSort('city')}>
-                  City {sortOption.key === 'city' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                  {sortOption.key === 'city' && (sortOption.direction === 'asc' ? '↑' : '↓')} City 
                 </th>
                 <th onClick={() => handleSort('state')}>
-                  State {sortOption.key === 'state' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                  {sortOption.key === 'state' && (sortOption.direction === 'asc' ? '↑' : '↓')} State
                 </th>
                 <th onClick={() => handleSort('zipCode')}>
-                  Zip Code {sortOption.key === 'zipCode' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                  {sortOption.key === 'zipCode' && (sortOption.direction === 'asc' ? '↑' : '↓')} Zip Code 
                 </th>
                 <th onClick={() => handleSort('department')}>
-                  Department {sortOption.key === 'department' && (sortOption.direction === 'asc' ? '↑' : '↓')}
+                   {sortOption.key === 'department' && (sortOption.direction === 'asc' ? '↑' : '↓')} Department
                 </th>
               </tr>
             </thead>
@@ -151,6 +146,12 @@ function EmployeeList() {
               ))}
             </tbody>
           </table>
+          
+          <div className='tableFooter'>
+          {/* Dynamic Text Display */}
+          <div className="dynamic-text">
+            Showing {startEmployee} to {endEmployee} of {totalEmployees} employees
+          </div>
 
           <div className="pagination">
             {Array.from({ length: totalPages }, (_, i) => (
@@ -162,6 +163,7 @@ function EmployeeList() {
                 {i + 1}
               </button>
             ))}
+          </div>
           </div>
         </>
       ) : (
