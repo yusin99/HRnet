@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../EmployeeForm/employeeForm.css";
 import { Button } from '../Button/button';
-import Modal from './../Modal/modal';
+import { Modal } from 'modal-customizer-react';
 
 function EmployeeForm({ onSave }) {
   const [formData, setFormData] = useState({
@@ -111,9 +111,9 @@ function EmployeeForm({ onSave }) {
           <option value="Legal">Legal</option>
         </select>
 
-        <Button text="Save" link={false} />
+        <Button text="Save" />
       </form>
-      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} title="Employee created successfully" />}
     </div>
   );
 }
